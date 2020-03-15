@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Calendario
 {
@@ -14,18 +12,35 @@ namespace Calendario
         {
             get { return VerificaBissexto(Ano); }
         }
+        
+        public void Imprimir()
+        {
+            int diaSemana = DiaSemanaUm(base.DiaPascoa, Bissexto);
+            for (int mes = 1; mes <= 12; mes++)
+            {
+                int totalDiaMes = TotalDiaMes(mes, Bissexto);
+                ImprimeCabecalho(mes, diaSemana);
+                for (int dia = 1; dia <= totalDiaMes; dia++, diaSemana++)
+                {
+                    if (diaSemana == 7)
+                    {
+                        diaSemana = 0;
+                        if (dia != 1)
+                        {
+                            Console.WriteLine(" |");
+                            Console.Write("|");
+                        }
+                    }
+                    ImprimeDias(diaSemana, dia);
+                }
+                ImprimeFinalMes(diaSemana + 1);
+            }
+        }
 
         private bool VerificaBissexto(int ano)
         {
-            int bi = 0;
-            if (ano % 100 == 0)
-            {
-                bi = ano / 100;
-            }
-            else
-            {
-                bi = ano;
-            }
+            int bi = ano % 100 == 0 ? ano / 100 : ano;
+
             if (bi % 4 == 0)
             {
                 return true;
@@ -80,30 +95,6 @@ namespace Calendario
             }
             diaSemana = diaSemana + 1 == 8 ? 1 : diaSemana + 1;
             return diaSemana;
-        }
-
-        public void Imprimir()
-        {
-            int diaSemana = DiaSemanaUm(base.DiaPascoa, Bissexto);
-            for (int mes = 1; mes <= 12; mes++)
-            {
-                int totalDiaMes = TotalDiaMes(mes, Bissexto);
-                ImprimeCabecalho(mes, diaSemana);
-                for (int dia = 1; dia <= totalDiaMes; dia++, diaSemana++)
-                {
-                    if (diaSemana == 7)
-                    {
-                        diaSemana = 0;
-                        if (dia != 1)
-                        {
-                            Console.WriteLine(" |");
-                            Console.Write("|");
-                        }
-                    }
-                    ImprimeDias(diaSemana, dia);
-                }
-                ImprimeFinalMes(diaSemana + 1);
-            }
         }
 
         private int TotalDiaMes(int mes, bool bissexto)
