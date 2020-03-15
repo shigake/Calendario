@@ -4,16 +4,18 @@ using System.Text;
 
 namespace Calendario
 {
-    public class Calendario
+    public class Calendario : Pascoa
     {
-        public Calendario(int pascoa, int ano)
+        public Calendario(int ano) : base(ano)
         {
-            Imprimir(DiaSemanaUm(pascoa, Bissexto(ano)), Bissexto(ano));
+            Ano = ano;
+        }
+        public bool Bissexto
+        {
+            get { return VerificaBissexto(Ano); }
         }
 
-        public int DiaPascoa { get; set; }
-
-        private bool Bissexto(int ano)
+        private bool VerificaBissexto(int ano)
         {
             int bi = 0;
             if (ano % 100 == 0)
@@ -26,12 +28,10 @@ namespace Calendario
             }
             if (bi % 4 == 0)
             {
-                //bissexto fev = 29
                 return true;
             }
             else
             {
-                //nao bissexto fev = 28
                 return false;
             }
         }
@@ -82,13 +82,12 @@ namespace Calendario
             return diaSemana;
         }
 
-        private void Imprimir(int diaSemanaUm, bool bissexto)
+        public void Imprimir()
         {
-            int diaSemana = diaSemanaUm;
-            int totalDiaMes = 0;
+            int diaSemana = DiaSemanaUm(base.DiaPascoa, Bissexto);
             for (int mes = 1; mes <= 12; mes++)
             {
-                totalDiaMes = TotalDiaMes(mes, bissexto);
+                int totalDiaMes = TotalDiaMes(mes, Bissexto);
                 ImprimeCabecalho(mes, diaSemana);
                 for (int dia = 1; dia <= totalDiaMes; dia++, diaSemana++)
                 {
@@ -193,19 +192,19 @@ namespace Calendario
                     Console.Write(" -- ");
                     break;
                 case 2:
-                    Console.Write(" -- -- ");
+                    Console.Write(" --  -- ");
                     break;
                 case 3:
-                    Console.Write(" -- -- -- ");
+                    Console.Write(" --  --  -- ");
                     break;
                 case 4:
-                    Console.Write(" -- -- -- -- ");
+                    Console.Write(" --  --  --  -- ");
                     break;
                 case 5:
-                    Console.Write(" -- -- -- -- -- ");
+                    Console.Write(" --  --  --  --  -- ");
                     break;
                 case 6:
-                    Console.Write(" -- -- -- -- -- -- ");
+                    Console.Write(" --  --  --  --  --  -- ");
                     break;
             }
         }
@@ -215,22 +214,22 @@ namespace Calendario
             switch (diaSemana)
             {
                 case 2:
-                    Console.WriteLine(" -- -- -- -- -- -- |");
+                    Console.WriteLine(" --  --  --  --  --  --  |");
                     break;
                 case 3:
-                    Console.WriteLine(" -- -- -- -- -- |");
+                    Console.WriteLine(" --  --  --  --  --  |");
                     break;
                 case 4:
-                    Console.WriteLine(" -- -- -- -- |");
+                    Console.WriteLine(" --  --  --  --  |");
                     break;
                 case 5:
-                    Console.WriteLine(" -- -- -- |");
+                    Console.WriteLine(" --  --  --  |");
                     break;
                 case 6:
-                    Console.WriteLine(" -- -- |");
+                    Console.WriteLine(" --  --  |");
                     break;
                 case 7:
-                    Console.WriteLine(" -- |");
+                    Console.WriteLine(" --  |");
                     break;
                 case 8:
                     Console.WriteLine(" |");

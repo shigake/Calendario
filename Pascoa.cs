@@ -8,16 +8,18 @@ namespace Calendario
     {
         public Pascoa(int ano)
         {
-            int numeroAureo = NumeroAureo(ano);
-            int seculo = Seculo(ano);
+            Ano = ano;
+            int numeroAureo = NumeroAureo(Ano);
+            int seculo = Seculo(Ano);
             int x = QuocienteX(seculo);
             int z = QuocienteY(seculo);
             int epacta = Epacta(numeroAureo, z, x);
             int luaCheia = LuaCheia(epacta);
-            int domingo = Domingo(x, ano);
+            int domingo = Domingo(x, Ano);
             DiaPascoa = CalculoMes(luaCheia, domingo);
         }
 
+        public int Ano { get; set; }
         public int DiaPascoa { get; set; }
 
         private int NumeroAureo(int y)
